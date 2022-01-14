@@ -3,7 +3,7 @@ import Button from './UI/Buttons/Button';
 import Input from './UI/Inputs/Input';
 
 function PostForm({createPost}) {
-	const [post, setPost] = useState({title: '', description: ''});
+	const [post, setPost] = useState({title: '', body: ''});
 	
 	const addNewPost = (e) => {
 		e.preventDefault()
@@ -11,36 +11,26 @@ function PostForm({createPost}) {
          ...post,
 			id: Date.now()
       };
-      createPost(newPost);
-		setPost({title: '', description: ''});
+		if(post.title && post.body) {
+			createPost(newPost);
+			setPost({title: '', body: ''});
+		}
    };
 
    return (
-			<form>
+			<form> 
 				<Input
 					onChange={(e) => setPost({...post, title: e.target.value})}
 					value={post.title}
 					placeholder="Enter title"
 					type="text"
-				></Input>
-				<Input
-					onChange={(e) => setPost({...post, description: e.target.value})}
-					value={post.description}
-					placeholder="Enter description"
-					type="text"
-				></Input>
-				{/* <input
-					onChange={(e) => setPosts(e.target.description)}
-					placeholder="Enter text"
-					type="text"
-					value={f}
 				/>
-				<input
-					onChange={(e) => setPosts(e.target.body)}
-					placeholder="Enter text"
+				<Input
+					onChange={(e) => setPost({...post, body: e.target.value})}
+					value={post.body}
+					placeholder="Enter body"
 					type="text"
-					value={f}
-				/> */}
+				/>
 				<Button onClick={addNewPost} type="submit">
 					Submit
 				</Button>
